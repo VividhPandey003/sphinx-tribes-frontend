@@ -9,6 +9,7 @@ import PageLoadSpinner from 'people/utils/PageLoadSpinner';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch, useParams } from 'react-router-dom';
 import { useStores } from 'store';
+import { paginationQueryLimit } from 'store/main'; 
 import styled from 'styled-components';
 import { LoadMoreContainer } from '../../../people/widgetViews/WidgetSwitchViewer';
 import { colors } from '../../../config/colors';
@@ -49,16 +50,15 @@ export const Wanted = observer(() => {
   const [displayedBounties, setDisplayedBounties] = useState<BountyType[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState(1);
-  const paginationLimit = 20;
   const [hasMoreBounties, setHasMoreBounties] = useState(true);
 
   // Function to fetch user tickets with pagination
   async function getUserTickets() {
     setIsLoading(true);
     // Fetch bounties for the specified page and limit
-    const response = await main.getPersonCreatedBounties({ page: page, limit: paginationLimit }, personPubkey);
+    const response = await main.getPersonCreatedBounties({ page: page, limit: paginationQueryLimit }, personPubkey);
     // Check if the response has fewer bounties than the limit, indicating no more bounties to load
-    if (response.length < paginationLimit) {
+    if (response.length < paginationQueryLimit) {
       setHasMoreBounties(false);
     }
     // Update the displayed bounties by appending the new bounties
@@ -71,11 +71,11 @@ export const Wanted = observer(() => {
     setPage(nextPage);
     // Fetch bounties for the next page
     const response = await main.getPersonCreatedBounties(
-      { page: nextPage, limit: paginationLimit }, 
+      { page: nextPage, limit: paginationQueryLimit }, 
       personPubkey
     );
     // Check if the response has fewer bounties than the limit, indicating no more bounties to load
-    if (response.length < paginationLimit) {
+    if (response.length < paginationQueryLimit) {
       setHasMoreBounties(false);
     }
     // Update the displayed bounties by appending the new bounties
