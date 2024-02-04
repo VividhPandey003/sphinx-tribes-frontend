@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Organization } from 'store/main';
 import EditOrgModal from '../organization/EditOrgModal';
 
@@ -64,5 +64,19 @@ describe('EditOrgModal Component', () => {
   test('displays the Delete button', () => {
     render(<EditOrgModal {...props} />);
     expect(screen.getByText(/Delete Organization/i)).toBeInTheDocument();
+  });
+
+  test('Save button is enabled if name and description have a value, and website, github, logo are empty', async () => {
+    render(<EditOrgModal {...props} />);
+    fireEvent.change(screen.getByLabelText(/Organization Name/i) as HTMLInputElement, {
+      target: { value: 'Updated Org' }
+    });
+    fireEvent.change(screen.getByLabelText(/Description/i) as HTMLInputElement, {
+      target: { value: 'Updated Description' }
+    });
+    expect((screen.getByLabelText(/Website/i) as HTMLInputElement).value).toBe('');
+    expect((screen.getByLabelText(/Github repo/i) as HTMLInputElement).value).toBe('');
+    expect(screen.getByLabelText(/LOGO/)).toBeInTheDocument();
+    expect(screen.getByText(/Save changes/i)).toBeEnabled();
   });
 });
