@@ -68,7 +68,7 @@ describe('EditOrgModal Component', () => {
 
   test('Save button is enabled if name and description have a value, and website, github, logo are empty', async () => {
     render(<EditOrgModal {...props} />);
-    
+
     fireEvent.change(screen.getByLabelText(/Organization Name/i) as HTMLInputElement, {
       target: { value: 'Updated Org' }
     });
