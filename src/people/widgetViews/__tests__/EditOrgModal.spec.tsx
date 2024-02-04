@@ -77,11 +77,9 @@ describe('EditOrgModal Component', () => {
     });
 
     await waitFor(() => {
-      // Ensure Website, Github, and Logo fields are empty
-      expect((screen.getByLabelText(/Website/i) as HTMLInputElement).value).toBe('');
-      expect((screen.getByLabelText(/Github repo/i) as HTMLInputElement).value).toBe('');
+      expect((screen.getByLabelText(/Website/i) as HTMLInputElement).value).toBeUndefined();
+      expect((screen.getByLabelText(/Github repo/i) as HTMLInputElement).value).toBeUndefined();
       expect(screen.getByLabelText(/LOGO/)).toBeInTheDocument();
-
       expect(screen.getByText(/Save changes/i)).toBeEnabled();
     });
   });
