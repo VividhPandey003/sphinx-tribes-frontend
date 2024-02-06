@@ -218,7 +218,7 @@ const EditOrgModal = (props: EditOrgModalProps) => {
         name: body.name || org.name,
         owner_pubkey: org.owner_pubkey,
         img: img || org.img,
-        description: body.description || org?.description,
+        description: body.description !== undefined ? body.description : null,
         github: body.github !== undefined ? body.github : org?.github || null,
         website: body.website !== undefined ? body.website : org?.website || null,
         created: org.created,
