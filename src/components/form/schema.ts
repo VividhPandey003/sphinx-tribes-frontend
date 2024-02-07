@@ -9,7 +9,7 @@ import {
 import { FormField } from './utils';
 
 const strValidator = Yup.string().trim().required('Required');
-const linkValidator = Yup.string().trim().nullable();
+const optionalValidator = Yup.string().trim().nullable();
 const strValidatorNotRequired = Yup.string().trim();
 const badgeObjectStrValidator = Yup.object().shape({
   value: strValidator
@@ -820,7 +820,7 @@ export const organizationSchema: FormField[] = [
     name: 'website',
     label: 'Website',
     type: 'text',
-    validator: linkValidator,
+    validator: optionalValidator,
     style: {
       gridArea: '2 / 1 / 3 / 2',
       height: '85px'
@@ -834,7 +834,7 @@ export const organizationSchema: FormField[] = [
     label: 'Github repo',
     type: 'text',
     prepend: 'https://github.com/',
-    validator: linkValidator,
+    validator: optionalValidator,
     style: {
       gridArea: '3 / 1 / 4 / 2',
       height: '85px'
@@ -847,6 +847,7 @@ export const organizationSchema: FormField[] = [
     name: 'description',
     label: 'Description',
     type: 'textarea',
+    validator: Yup.string().optional(),
     style: {
       height: '202px',
       gridArea: '1 / 2 / 4 / 3'
